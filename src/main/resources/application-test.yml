@@ -1,0 +1,14 @@
+# Test profile - datasource URL overridden by @DynamicPropertySource in integration tests
+spring:
+  datasource:
+    username: medsafety
+    password: medsafety
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+app:
+  jwt:
+    secret: test-secret-key-for-integration-tests-only-32chars
