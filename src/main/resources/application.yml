@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: medication-safety-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/medsafety
+    username: medsafety
+    password: medsafety
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Flyway manages schema; Hibernate only validates
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+        jdbc:
+          batch_size: 25
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# JWT (override in production)
+app:
+  jwt:
+    secret: ${JWT_SECRET:your-256-bit-secret-key-for-development-only-change-in-production}
+    expiration-ms: 86400000  # 24 hours
+
+# Springdoc / OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
